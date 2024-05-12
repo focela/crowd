@@ -160,4 +160,3 @@ This project follows the [all-contributors](https://allcontributors.org) specifi
 Contributions of any kind welcome!
 
 [link-license]: https://opensource.org/license/bsd-3-clause
-1
