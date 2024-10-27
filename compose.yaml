@@ -1,0 +1,34 @@
+services:
+
+  crowd:
+    container_name: crowd
+    restart: always
+    build:
+      context: ./
+    environment:
+      - ATL_PROXY_NAME=${CROWD_ATL_PROXY_NAME:-localhost}
+      - ATL_PROXY_PORT=${CROWD_ATL_PROXY_PORT:-443}
+      - ATL_TOMCAT_PORT=${CROWD_ATL_TOMCAT_PORT:-8095}
+      - ATL_TOMCAT_SCHEME=${CROWD_ATL_TOMCAT_SCHEME:-https}
+      - ATL_TOMCAT_SECURE=${CROWD_ATL_TOMCAT_SECURE:-true}
+      - TZ=${CROWD_TZ:-Asia/Ho_Chi_Minh}
+    ports:
+      - ${CROWD_PORT:-8095}:8095
+    volumes:
+      - crowd_data:/var/crowd
+    networks:
+      - focela_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8095"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+networks:
+  focela_network:
+    driver: bridge
+    name: focela_network
+
+volumes:
+  crowd_data:
